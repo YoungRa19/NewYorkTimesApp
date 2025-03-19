@@ -1,15 +1,19 @@
+import 'package:newyorktimesapp/models/media_data.dart';
 
-class Media{
+
+class Media {
   String? type;
   String? subtype;
   String? caption;
   String? copyright;
+  List<MediaData>? mediadata;  // Añadir mediadata aquí
 
   Media({
     this.type,
     this.subtype,
     this.caption,
-    this.copyright
+    this.copyright,
+    this.mediadata,  // Añadir mediadata al constructor
   });
 
   factory Media.fromMap(Map<String, dynamic> map) {
@@ -17,8 +21,10 @@ class Media{
       type: map["type"],
       subtype: map["subtype"],
       caption: map["caption"],
-      copyright: map["copyright"]
+      copyright: map["copyright"],
+      mediadata: (map["media-metadata"] as List?)  // Accediendo a "media-metadata" para obtener la lista de MediaData
+          ?.map((a) => MediaData.fromMap(a))
+          .toList(),
     );
   }
-
 }

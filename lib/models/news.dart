@@ -1,18 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:newyorktimesapp/models/media.dart';
-import 'package:newyorktimesapp/models/media_data.dart';
 
-
-class News{
+class News {
   String? title;
   String? url;
   String? abstract;
   String? published_date;
   int? id;
-
   List<Media>? media = [];
-  List<MediaData>? mediadata = [];
-
 
   News({
     this.title,
@@ -21,28 +16,32 @@ class News{
     this.published_date,
     this.id,
     this.media,
-    this.mediadata
   });
 
-  static Future<News?> getNews(int id) async {
-    try {
-      final response = await Dio().get('https://api.nytimes.com/svc/mostpopular/v2/viewed/{1}.json?api-key=L71bZkRRFUZ3NQN6');
-      Map<String, dynamic> body = response.data;
+  factory News.fromMap(Map<String, dynamic> map) {
+    // Modificar aquí para que mediadata esté dentro de media
+    return News(
+      id: map["id"],
+      title: map["title"],
+      url: map["url"],
+      abstract: map["abstract"],
+      published_date: map["published_date"],
+      media: (map["media"] as List?)
+          ?.map((a) => Media.fromMap(a))
+          .toList() ?? [],
+    );
+  }
 
-      return News(
-        id: body["id"],
-        title: body["title"],
-        url: body["url"],
-        abstract: body["abstract"],
-        published_date: body["published_date"],
-        media: (body["media"] as List?)?.map((a) => Media.fromMap(a["media"])).toList() ?? [],
-          mediadata: (["media-metadata"] as List?)?.map((a) => MediaData.fromMap(a["media-metadata"])).toList() ?? []
+  static Future<List<News>> getNews() async {
+    try {
+      final response = await Dio().get(
+        'https://api.nytimes.com/svc/mostpopular/v2/viewed/7.json?api-key=L71bZkRRFUZ3NQN6',
       );
+      List<dynamic> results = response.data["results"];
+      return results.map((news) => News.fromMap(news)).toList();
     } catch (e) {
-      print("Error al obtener la Noticia: $e");
-      return null;
+      print("Error al obtener las noticias: $e");
+      return [];
     }
   }
 }
-
-

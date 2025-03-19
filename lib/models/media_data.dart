@@ -20,7 +20,4 @@ class MediaData{
       height: map["height"],
     );
   }
-
-
-
 }
