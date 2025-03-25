@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newyorktimesapp/dashboard/input.dart';
+import 'package:newyorktimesapp/dashboard/dashboard.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,12 +12,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Pokedex',
+      title: 'The New York Times',
       theme: ThemeData(
 
-        primaryColor: Color(0xFF3D7DCA),
-        hintColor: Color(0xFFFFCC00),
-        scaffoldBackgroundColor: Color(0xFFF2F2F2),
+        primaryColor: Color(0xFF191919),
+        hintColor: Color(0xFF777777),
+        scaffoldBackgroundColor: Color(0xFF1C1C1D),
 
         textTheme: TextTheme(
           headlineLarge: TextStyle(
@@ -32,11 +32,11 @@ class MyApp extends StatelessWidget {
           ),
           bodyLarge: TextStyle(
             fontSize: 16,
-            color: Colors.black,
+            color: Colors.white,
           ),
           bodyMedium: TextStyle(
             fontSize: 14,
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
 
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         ),
 
         appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xFF3D7DCA),
+          backgroundColor: Color(0xFF000000),
           foregroundColor: Colors.white,
           titleTextStyle: TextStyle(
             fontSize: 20,

@@ -22,7 +22,7 @@ class _NewyorktimesScreenState extends State<NewyorktimesScreen> {
   Future<void> fetchNews() async {
     setState(() => isLoading = true);
     news = await News.getNews();
-    print(news);  // Esto ayudará a ver qué datos se están recuperando
+    print(news);
     setState(() => isLoading = false);
   }
 
@@ -34,11 +34,9 @@ class _NewyorktimesScreenState extends State<NewyorktimesScreen> {
     }
 
     return ListView.builder(
-      itemCount: news.length < 10 ? news.length : 10, // Muestra solo las 10 primeras noticias
+      itemCount: news.length < 10 ? news.length : 10,
       itemBuilder: (context, index) {
         final article = news[index];
-
-        // Acceder a mediadata dentro de media
         final imageUrl = (article.media != null && article.media!.isNotEmpty)
             ? article.media![0].mediadata?.firstWhere((element) => element.url != null)?.url ?? ''
             : '';
@@ -74,7 +72,7 @@ class _NewyorktimesScreenState extends State<NewyorktimesScreen> {
                       }
                     },
                     errorBuilder: (context, error, stackTrace) {
-                      return const Center(child: Icon(Icons.error, color: Colors.red));  // Muestra un ícono en caso de error
+                      return const Center(child: Icon(Icons.error, color: Colors.red));
                     },
                   ),
 

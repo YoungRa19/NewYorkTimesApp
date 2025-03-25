@@ -19,7 +19,6 @@ class News {
   });
 
   factory News.fromMap(Map<String, dynamic> map) {
-    // Modificar aquí para que mediadata esté dentro de media
     return News(
       id: map["id"],
       title: map["title"],
@@ -35,7 +34,7 @@ class News {
   static Future<List<News>> getNews() async {
     try {
       final response = await Dio().get(
-        'https://api.nytimes.com/svc/mostpopular/v2/viewed/7.json?api-key=L71bZkRRFUZ3NQN6',
+        'https://api.nytimes.com/svc/mostpopular/v2/shared/1/facebook.json?api-key=trqxewt4zSo1PF8qh11R34spKnb99AyE',
       );
       List<dynamic> results = response.data["results"];
       return results.map((news) => News.fromMap(news)).toList();
@@ -43,5 +42,9 @@ class News {
       print("Error al obtener las noticias: $e");
       return [];
     }
+  }
+
+  Map<String,dynamic> toMap(){
+    return{"id":id,"title":title,"url":url,"abstract":abstract,"published_date":published_date,"media":media};
   }
 }

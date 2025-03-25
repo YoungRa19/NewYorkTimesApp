@@ -22,9 +22,7 @@ class Media {
       subtype: map["subtype"],
       caption: map["caption"],
       copyright: map["copyright"],
-      mediadata: (map["media-metadata"] as List?)  // Accediendo a "media-metadata" para obtener la lista de MediaData
-          ?.map((a) => MediaData.fromMap(a))
-          .toList(),
+      mediadata: (map["media-metadata"] as List?) ?.map((a) => MediaData.fromMap(a)).toList(),
     );
   }
 }

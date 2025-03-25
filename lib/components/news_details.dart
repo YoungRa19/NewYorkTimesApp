@@ -8,7 +8,6 @@ class NewsDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Acceder a mediadata a través de media
     final imageUrl = (news.media != null && news.media!.isNotEmpty)
         ? news.media![0].mediadata?.firstWhere((element) => element.url != null)?.url ?? ''
         : '';
