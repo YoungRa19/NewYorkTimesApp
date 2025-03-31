@@ -6,7 +6,7 @@ class Media {
   String? subtype;
   String? caption;
   String? copyright;
-  List<MediaData>? mediadata;  // Añadir mediadata aquí
+  List<MediaData>? mediadata = [];  // Añadir mediadata aquí
 
   Media({
     this.type,
@@ -22,7 +22,9 @@ class Media {
       subtype: map["subtype"],
       caption: map["caption"],
       copyright: map["copyright"],
-      mediadata: (map["media-metadata"] as List?) ?.map((a) => MediaData.fromMap(a)).toList(),
+      mediadata: (map["mediadata"] as List?)
+          ?.map((a) => MediaData.fromMap(a))
+          .toList() ?? [],
     );
+    }
   }
-}

@@ -40,11 +40,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
 
-        buttonTheme: ButtonThemeData(
-          buttonColor: Color(0xFF3D7DCA), // Azul de Pokémon
-          textTheme: ButtonTextTheme.primary,
-        ),
-
         appBarTheme: AppBarTheme(
           backgroundColor: Color(0xFF000000),
           foregroundColor: Colors.white,
