@@ -7,7 +7,7 @@ class News {
   String? abstract;
   String? published_date;
   int? id;
-  List<Media>? media = [];
+  Media? media;
 
   News({
     this.title,
@@ -18,28 +18,36 @@ class News {
     this.media,
   });
 
-  factory News.fromMap(Map<String, dynamic> map) {
+  factory News.fromJson(json) {
+    print("Media cruda del JSON:");
+    print(json["media"]);
+
     return News(
-      id: map["id"],
-      title: map["title"],
-      url: map["url"],
-      abstract: map["abstract"],
-      published_date: map["published_date"],
-      media: (map["media"] as List?)
-          ?.map((a) => Media.fromMap(a))
-          .toList() ?? [],
+      id: json["id"],
+      title: json["title"],
+      url: json["url"],
+      abstract: json["abstract"],
+      published_date: json["published_date"],
+      media: Media().getMedia(json["media"])
+
     );
   }
 
   static Future<List<News>> getNews() async {
     try {
+      List<News> news = [];
       final response = await Dio().get(
         'https://api.nytimes.com/svc/mostpopular/v2/shared/1/facebook.json?api-key=trqxewt4zSo1PF8qh11R34spKnb99AyE',
       );
-      List<dynamic> results = response.data["results"];
-      return results.map((news) => News.fromMap(news)).toList();
+      final results = response.data["results"];
+      for (var result in results) {
+        news.add(News.fromJson(result));
+      }
+
+      return news.where((notice) => notice.media != null).toList();
     } catch (e) {
       print("Error al obtener las noticias: $e");
+      print("StackTrace: ${e.toString()}");
       return [];
     }
   }

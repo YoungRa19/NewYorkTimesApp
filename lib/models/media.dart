@@ -6,25 +6,40 @@ class Media {
   String? subtype;
   String? caption;
   String? copyright;
-  List<MediaData>? mediadata = [];  // Añadir mediadata aquí
+  String? url;
+  MediaData? mediadata; // Añadir mediadata aquí
 
   Media({
     this.type,
     this.subtype,
     this.caption,
     this.copyright,
-    this.mediadata,  // Añadir mediadata al constructor
+    this.url,
+    this.mediadata, // Añadir mediadata al constructor
   });
 
-  factory Media.fromMap(Map<String, dynamic> map) {
-    return Media(
-      type: map["type"],
-      subtype: map["subtype"],
-      caption: map["caption"],
-      copyright: map["copyright"],
-      mediadata: (map["mediadata"] as List?)
-          ?.map((a) => MediaData.fromMap(a))
-          .toList() ?? [],
-    );
+  Media? getMedia(List media) {
+    Map? content = media.lastOrNull;
+
+    if (content != null) {
+      mediadata = MediaData().getMetaData(content["media-metadata"]);
+      return Media(
+          type: content["type"],
+          subtype: content["subtype"],
+          caption: content["caption"],
+          copyright: content["copyright"],
+          url: mediadata?.url)
+        ..mediadata = mediadata;
     }
+    return null;
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "type": type,
+      "subtype": subtype,
+      "caption": caption,
+      "url": url,
+    };
+  }
+}
